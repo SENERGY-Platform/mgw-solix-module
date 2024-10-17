@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/SENERGY-Platform/mgw-modfile-lib/main/schema/v1.json
+modfileVersion: "v1"
+id: github.com/SENERGY-Platform/mgw-solix-module
+name: Solix
+version: v0.0.1
+type: device-connector
+deploymentType: single
+license: "Apache License 2.0"
+dependencies:
+  github.com/SENERGY-Platform/mgw-mqtt-broker:
+    version: <v2.0.0
+    requiredServices:
+      broker:
+        - refVar: S2M_MQTT_URI
+          template: mqtt://{ref}:1881
+          services:
+            - solix2mqtt
+services:
+  solix2mqtt:
+    name: solix2mqtt
+    image: tomquist/solix2mqtt
+configs:
+  S2M_USER:
+    optional: false
+    userInput:
+      name: Solix Username (Email)
+      type: text
+    targets:
+      - refVar: S2M_USER
+        services:
+          - solix2mqtt
+  S2M_PASSWORD:
+    optional: false
+    userInput:
+      name: Solix Password
+      type: text
+    targets:
+      - refVar: S2M_PASSWORD
+        services:
+          - solix2mqtt
+  S2M_COUNTRY:
+    optional: false
+    value: DE
+    userInput:
+      name: Country Code
+      type: text
+    targets:
+      - refVar: S2M_COUNTRY
+        services:
+          - solix2mqtt
+  S2M_POLL_INTERVAL:
+    optional: false
+    value: 60
+    dataType: int
+    userInput:
+      name: Poll Interval
+      type: number
+    targets:
+      - refVar: S2M_POLL_INTERVAL
+        services:
+          - solix2mqtt
+  S2M_VERBOSE:
+    optional: false
+    value: false
+    dataType: bool
+    userInput:
+      name: Verbose Logging
+      type: text
+    targets:
+      - refVar: S2M_VERBOSE
+        services:
+          - solix2mqtt
