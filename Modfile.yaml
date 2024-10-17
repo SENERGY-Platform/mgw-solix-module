@@ -61,8 +61,8 @@ configs:
           - solix2mqtt
   S2M_VERBOSE:
     optional: false
-    value: false
-    dataType: bool
+    value: "false"
+    dataType: string
     userInput:
       name: Verbose Logging
       type: text
