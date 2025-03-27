@@ -2,7 +2,7 @@
 modfileVersion: "v1"
 id: github.com/SENERGY-Platform/mgw-solix-module
 name: Solix
-version: v0.0.2
+version: v0.0.3
 type: device-connector
 deploymentType: single
 license: "Apache License 2.0"
@@ -11,14 +11,14 @@ dependencies:
     version: <v2.0.0
     requiredServices:
       broker:
-        - refVar: S2M_MQTT_URI
+        - refVar: CONF_MSGBROKER_HOST
           template: mqtt://{ref}:1881
           services:
-            - solix2mqtt
+            - mgw-solix-dc
 services:
-  solix2mqtt:
-    name: solix2mqtt
-    image: tomquist/solix2mqtt
+  mgw-solix-dc:
+    name: mgw-solix-dc
+    image: ghcr.io/senergy-platform/mgw-solix-dc:v0.0.2
 configs:
   S2M_USER:
     optional: false
@@ -26,18 +26,18 @@ configs:
       name: Solix Username (Email)
       type: text
     targets:
-      - refVar: S2M_USER
+      - refVar: CONF_SOLIX_USERNAME
         services:
-          - solix2mqtt
+          - mgw-solix-dc
   S2M_PASSWORD:
     optional: false
     userInput:
       name: Solix Password
       type: text
     targets:
-      - refVar: S2M_PASSWORD
+      - refVar: CONF_SOLIX_PASSWORD
         services:
-          - solix2mqtt
+          - mgw-solix-dc
   S2M_COUNTRY:
     optional: false
     value: DE
@@ -45,9 +45,9 @@ configs:
       name: Country Code
       type: text
     targets:
-      - refVar: S2M_COUNTRY
+      - refVar: CONF_SOLIX_COUNTRY
         services:
-          - solix2mqtt
+          - mgw-solix-dc
   S2M_POLL_INTERVAL:
     optional: false
     value: 60
@@ -58,15 +58,21 @@ configs:
     targets:
       - refVar: S2M_POLL_INTERVAL
         services:
-          - solix2mqtt
-  S2M_VERBOSE:
+          - mgw-solix-dc
+  CONF_LOGGER_LEVEL:
     optional: false
-    value: "false"
+    value: "info"
+    options:
+      - "debug"
+      - "info"
+      - "warning"
+      - "error"
+      - "critical"
     dataType: string
     userInput:
       name: Verbose Logging
       type: text
     targets:
-      - refVar: S2M_VERBOSE
+      - refVar: CONF_LOGGER_LEVEL
         services:
-          - solix2mqtt
+          - mgw-solix-dc
