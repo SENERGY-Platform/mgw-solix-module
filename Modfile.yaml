@@ -2,7 +2,7 @@
 modfileVersion: "v1"
 id: github.com/SENERGY-Platform/mgw-solix-module
 name: Solix
-version: v1.0.1
+version: v1.1.0
 type: device-connector
 deploymentType: single
 license: "Apache License 2.0"
@@ -17,7 +17,7 @@ dependencies:
 services:
   mgw-solix-dc:
     name: mgw-solix-dc
-    image: ghcr.io/senergy-platform/mgw-solix-dc:v1.0.1
+    image: ghcr.io/senergy-platform/mgw-solix-dc:v1.1.0
 configs:
   S2M_USER:
     optional: false
